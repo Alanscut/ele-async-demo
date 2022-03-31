@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.6",
+    "element-ui": "^2.15.0",
     "vue": "^2.6.14"
   },
   "devDependencies": {

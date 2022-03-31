@@ -1,83 +1,40 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <div id="app">
-    <header>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div>
-    </header>
-
-    <main>
-      <TheWelcome />
-    </main>
-  </div>
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    label-width="100px"
+    class="demo-ruleForm"
+  >
+    <el-form-item label="网址" prop="url">
+      <el-input v-model="ruleForm.url"></el-input>
+      <el-button @click="setLongUrl">设置长URL</el-button>
+      <el-button @click="setShortUrl">设置短URL</el-button>
+    </el-form-item>
+  </el-form>
 </template>
-
-<style>
-@import './assets/base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+<script>
+export default {
+  data() {
+    return {
+      ruleForm: {
+        url: ''
+      },
+      rules: {
+        url: [
+          { type: 'url', required: true, message: '请输入网址', trigger: 'change' }
+        ]
+      }
+    };
+  },
+  methods: {
+    setLongUrl() {
+      // 如果继续增大字符串长度，验证时间会更长
+      this.ruleForm.url = "//" + ":".repeat(99999) + "@"
+    },
+    setShortUrl() {
+      this.ruleForm.url = "https://www.baidu.com"
+    }
   }
 }
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-}
-</style>
+</script>
